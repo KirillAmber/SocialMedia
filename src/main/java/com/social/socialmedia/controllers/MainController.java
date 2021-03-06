@@ -1,7 +1,9 @@
 package com.social.socialmedia.controllers;
 import com.social.socialmedia.domain.Message;
+import com.social.socialmedia.domain.User;
 import com.social.socialmedia.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,11 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String create(@RequestParam String text, @RequestParam String tag, Model model){
-        Message message = new Message(text, tag);
+    public String create(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag, Model model){
+        Message message = new Message(text, tag, user);
         messageRepo.save(message);
 
         //Need to make new method for this

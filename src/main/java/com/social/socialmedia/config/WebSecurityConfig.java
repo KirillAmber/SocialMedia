@@ -1,27 +1,21 @@
 package com.social.socialmedia.config;
 
+import com.social.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private DataSource dataSource;
+    private UserService userService;
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -41,14 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource) // access for searching in db
-                .passwordEncoder(NoOpPasswordEncoder.getInstance()) // for cipher
-                .usersByUsernameQuery(
-                        "select username, password, active from usrs where username=?")
-                .authoritiesByUsernameQuery("select usrs.username, user_role.roles from usrs" +
-                        " inner join user_role on (usrs.id = user_role.user_id)" +
-                        " where usrs.username=?");
+        auth.userDetailsService(userService)
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
 
         /*"select username, password, active from usrs where username=?")
                 .authoritiesByUsernameQuery("select u.username, ur.roles from usrs" +
