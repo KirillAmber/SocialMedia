@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Main</title>
+    <th:block th:insert="fragments/semanticElements :: head" />
 </head>
 <body>
     <!-- logout -->
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+    <th:block th:replace="fragments/semanticElements :: logout" />
     <!-- create -->
     <div>
         <form method="post" th:action="@{/main}">
@@ -19,8 +17,8 @@
     </div>
     <!-- output -->
     <div>Список сообщений</div>
-    <form method="post" th:action="@{filter}">
-        <input type="text" name="filterTag">
+    <form method="get" th:action="@{/main}">
+        <input type="text" name="filterTag" th:value="${filter}">
         <button type="submit">Найти</button>
     </form>
     <div th:each="message : ${messages}">
@@ -29,6 +27,7 @@
         <i th:text="${message.tag}" />
         <strong th:text="${message.getAuthorName()}" />
     </div>
+
 
 </body>
 </html>
