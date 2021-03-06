@@ -5,6 +5,29 @@
     <title>Main</title>
 </head>
 <body>
-<p th:text="${some}" />
+    <!-- logout -->
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <!-- create -->
+    <div>
+        <form method="post">
+            <input type="text" name="text" placeholder="Введите сообщение">
+            <input type="text" name="tag" placeholder="Тэг">
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+    <!-- output -->
+    <div>Список сообщений</div>
+    <form method="post" th:action="@{filter}">
+        <input type="text" name="filterTag">
+        <button type="submit">Найти</button>
+    </form>
+    <div th:each="message : ${messages}">
+        <b th:text="${message.id}"/>
+        <span th:text="${message.text}" />
+        <i th:text="${message.tag}" />
+    </div>
+
 </body>
 </html>
