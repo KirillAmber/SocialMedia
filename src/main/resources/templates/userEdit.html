@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>User Edit</title>
+    <th:block th:insert="fragments/semanticElements :: head" />
+</head>
+<body>
+<form th:action="@{/user}" method="POST">
+    <input type="text" name="username" th:value="${user.getUsername()}" />
+    <input type="hidden" name="userId" th:value="${user.getId()}" />
+    <th:block th:each="role : ${roles}">
+        <br>
+        <input type="checkbox" th:name="${role.name()}" th:value="${role.name()}" th:text="${role.name()}"/>
+    </th:block>
+    <br>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

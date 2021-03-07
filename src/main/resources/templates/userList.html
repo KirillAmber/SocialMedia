@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+   <th:block th:insert="fragments/semanticElements :: head" />
+</head>
+<body>
+<h2>List of users</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th></th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.username}">Name</td>
+        <td th:each="role : ${user.roles}">
+            <span th:text="${role} + ','" />
+        </td>
+        <td>
+            <form method="GET" th:action="@{user/{id}(id=${user.id})}">
+                <button>edit</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
