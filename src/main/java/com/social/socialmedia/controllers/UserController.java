@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,8 +32,6 @@ public class UserController {
 
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
-        /*Optional<User> userEdit = userRepo.findById(id);
-        userEdit.ifPresent(user -> model.addAttribute("user", user));*/
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
