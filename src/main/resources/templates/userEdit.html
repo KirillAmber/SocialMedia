@@ -5,6 +5,8 @@
     <th:block th:insert="fragments/semanticElements :: head" />
 </head>
 <body>
+<div th:replace="fragments/semanticElements :: navbar" />
+<div class="container mt-5" >
 <form th:action="@{/user}" method="POST">
     <input type="text" name="username" th:value="${user.getUsername()}" />
     <input type="hidden" name="userId" th:value="${user.getId()}" />
@@ -15,5 +17,7 @@
     <br>
     <button type="submit">Save</button>
 </form>
+</div>
+<div th:replace="fragments/semanticElements :: scripts"/>
 </body>
 </html>

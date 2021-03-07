@@ -6,8 +6,12 @@
     <th:block th:insert="fragments/semanticElements :: head" />
 </head>
 <body>
+<div th:replace="fragments/semanticElements :: navbar" />
+<div class="container mt-5" >
 <p>Sign Up!</p>
 <p th:text="( (${message} == null)? '' : ${message})">
 <div th:insert="fragments/formEnterUserData :: form ('/registration', 'Sign Up')" />
+</div>
+<div th:replace="fragments/semanticElements :: scripts"/>
 </body>
 </html>

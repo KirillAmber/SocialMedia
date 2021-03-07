@@ -5,6 +5,8 @@
    <th:block th:insert="fragments/semanticElements :: head" />
 </head>
 <body>
+<div th:replace="fragments/semanticElements :: navbar" />
+<div class="container mt-5" >
 <h2>List of users</h2>
 <table>
     <tr>
@@ -24,5 +26,7 @@
         </td>
     </tr>
 </table>
+</div>
+<div th:replace="fragments/semanticElements :: scripts"/>
 </body>
 </html>

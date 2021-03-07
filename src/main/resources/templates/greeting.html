@@ -5,7 +5,11 @@
     <th:block th:insert="fragments/semanticElements :: head" />
 </head>
 <body>
-<p>Hello, user</p>
-<a th:href="@{/main}">Main Page</a>
+<div th:replace="fragments/semanticElements :: navbar" />
+<div class="container mt-5">
+    <h5>Hello, guest</h5>
+    <div>This is a simple social media</div>
+</div>
+<div th:replace="fragments/semanticElements :: scripts"/>
 </body>
 </html>

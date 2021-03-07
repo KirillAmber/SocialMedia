@@ -6,9 +6,19 @@
 </head>
 <body th:fragment="form (path, buttonName)">
 <form th:action="@{${path}}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" th:value="${buttonName}"/></div>
+    <div class="form-group row">
+        <label class="col-sm2 col-form-label"> User Name : </label>
+        <div class="col-sm-5">
+        <input type="text" name="username" class="form-control" placeholder="Username"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm2 col-form-label"> Password: </label>
+        <div class="col-sm-5">
+        <input type="password" name="password" class="form-control" placeholder="Password"/>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" th:text="${buttonName}">Text</button>
 </form>
 </body>
 </html>
