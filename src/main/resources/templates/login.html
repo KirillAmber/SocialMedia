@@ -8,7 +8,7 @@
 <body>
 <div th:replace="fragments/semanticElements :: navbar" />
 <div class="container mt-5">
-    <div th:insert="fragments/formEnterUserData :: form ('/login', 'Sign In')" />
+    <div th:insert="fragments/formEnterUserData :: form ('/login', 'Sign In', null)" />
     <div class="mt-2">
         <a  href="/registration">Sign up</a>
     </div>

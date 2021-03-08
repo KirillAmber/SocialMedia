@@ -10,7 +10,7 @@
 <div class="container mt-5" >
 <p>Sign Up!</p>
 <p th:text="( (${message} == null)? '' : ${message})">
-<div th:insert="fragments/formEnterUserData :: form ('/registration', 'Sign Up')" />
+<div th:insert="fragments/formEnterUserData :: form ('/registration', 'Sign Up', 'email')" />
 </div>
 <div th:replace="fragments/semanticElements :: scripts"/>
 </body>
