@@ -4,4 +4,4 @@ This is simple web site that I create
 
 Technologies used: Spring Boot, Spring Security, Spring MVC, thymeleaf, PostgreSQL, Maven, Intellij IDEA, Hibernate, FlyWay
 
-[![socialGif.th.gif](https://s4.gifyu.com/images/socialGif.gif)
+[![socialGif.th.gif](https://github.com/KirillAmber/SocialMedia/blob/2186c104276f15dfabe327be01edd1164ab2cd46/socialGif.gif)
