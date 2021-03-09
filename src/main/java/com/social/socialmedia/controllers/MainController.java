@@ -7,15 +7,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -52,12 +57,18 @@ public class MainController {
     @PostMapping("/main")
     public String create(
             @AuthenticationPrincipal User user,
-            @RequestParam String text,
-            @RequestParam String tag,
-            @RequestParam("file") MultipartFile file,
-            Model model){
-        Message message = new Message(text, tag, user);
+            @Valid Message message,
+            BindingResult bindingResult, // must be before model
+            Model model,
+            @RequestParam("file") MultipartFile file
+            ){
+        message.setAuthor(user);
 
+        if(bindingResult.hasErrors()){
+            Map<String, String> errorsMap = UtilsController.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("message", message);
+        } else {
         if(file != null && !file.getOriginalFilename().isEmpty()){
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()){
@@ -78,12 +89,16 @@ public class MainController {
         }
 
         messageRepo.save(message);
+        }
 
+        model.addAttribute("message", null);
         //Need to make new method for this
         Iterable<Message> messages = messageRepo.findAll();
         model.addAttribute("messages", messages);
 
         return "main";
     }
+
+
 
 }

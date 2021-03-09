@@ -2,59 +2,62 @@ package com.social.socialmedia.controllers;
 
 import com.social.socialmedia.domain.Role;
 import com.social.socialmedia.domain.User;
-import com.social.socialmedia.repos.UserRepo;
+import com.social.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
 
-    UserRepo userRepo;
+    private UserService userService;
+
 
     @Autowired
-    public void setUserRepo(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String userList(Model model){
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
         return "userList";
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public String userSave(@RequestParam("userId") User user,
                            @RequestParam Map<String, String> form,
                            @RequestParam String username){
-        user.setUsername(username);
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-        user.getRoles().clear();
-        for(Map.Entry<String, String> entry : form.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        for(String key : form.keySet()){
-            if(roles.contains(key)){
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        userRepo.save(user);
+        userService.saveUser(user, form, username);
         return "redirect:/user";
+    }
+
+    @GetMapping("profile")
+    public String getProfile(@AuthenticationPrincipal User user, Model model){
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
+
+        return "profile";
+    }
+
+    @PostMapping("profile")
+    public String updateProfile(@AuthenticationPrincipal User user,
+                                @RequestParam String password,
+                                @RequestParam String email){
+        userService.updateProfile(user, password, email);
+        return "redirect:/user/profile";
     }
 }

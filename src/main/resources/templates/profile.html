@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <th:block th:insert="fragments/semanticElements :: head" />
+</head>
+<body>
+<div th:replace="fragments/semanticElements :: navbar" />
+<div class="container mt-5">
+    <h5 th:text="${username}">Username</h5>
+    <form th:action="@{/user/profile}" method="post">
+            <div class="form-group row">
+                <label class="col-sm2 col-form-label"> Email: </label>
+                <div class="col-sm-5">
+                    <input type="email" name="email" class="form-control" placeholder="email" th:value="${email}?:'(nope)'"/>
+                </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm2 col-form-label"> Password: </label>
+            <div class="col-sm-5">
+                <input type="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+    <div th:replace="fragments/semanticElements :: scripts"/>
+</div>
+</body>
+</html>

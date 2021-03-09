@@ -4,26 +4,49 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body th:fragment="form (path, buttonName, email)">
+
+<body th:fragment="form (path, buttonName, isRegistration)">
 <form th:action="@{${path}}" method="post">
     <div class="form-group row">
         <label class="col-sm2 col-form-label"> User Name : </label>
         <div class="col-sm-5">
-        <input type="text" name="username" class="form-control" placeholder="Username"/>
-        </div>
-    </div>
-    <div th:if="${email}">
-        <div class="form-group row">
-            <label class="col-sm2 col-form-label"> Email: </label>
-            <div class="col-sm-5">
-                <input type="email" name="email" class="form-control" placeholder="Email"/>
+            <input type="text" name="username" class="form-control" th:value="${user}? ${user.username} : ''"
+                   th:classappend="${usernameError}? 'is-invalid' : ''" placeholder="Username"/>
+            <div th:if="${usernameError}" class="invalid-feedback">
+                <span  th:text="${usernameError}"></span>
             </div>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm2 col-form-label"> Password: </label>
         <div class="col-sm-5">
-        <input type="password" name="password" class="form-control" placeholder="Password"/>
+            <input type="password" name="password" class="form-control"
+                   th:classappend="${passwordError}? 'is-invalid' : ''" placeholder="Password"/>
+            <div th:if="${passwordError}" class="invalid-feedback">
+                <span  th:text="${passwordError}"></span>
+            </div>
+        </div>
+    </div>
+    <div th:if="${isRegistration}">
+        <div class="form-group row">
+            <label class="col-sm2 col-form-label"> Email: </label>
+            <div class="col-sm-5">
+                <input type="email" name="email" class="form-control" th:value="${user}? ${user.email} : ''"
+                       th:classappend="${emailError}? 'is-invalid' : ''" placeholder="Email"/>
+                <div th:if="${emailError}" class="invalid-feedback">
+                    <span  th:text="${emailError}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm2 col-form-label"> Retype password: </label>
+            <div class="col-sm-5">
+                <input type="password" name="password2" class="form-control"
+                       th:classappend="${password2Error}? 'is-invalid' : ''" placeholder="Retype password"/>
+                <div th:if="${password2Error}" class="invalid-feedback">
+                    <span  th:text="${password2Error}"></span>
+                </div>
+            </div>
         </div>
     </div>
     <button class="btn btn-primary" type="submit" th:text="${buttonName}">Text</button>
