@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Entity //this tells Hibernate to make a table out of this class
 public class Message {
@@ -17,7 +16,6 @@ public class Message {
     private User author;
 
     @NotBlank(message = "Please fill the message")
-    @NotEmpty(message = "Please fill the message")
     @Length(min = 1, max = 2048, message = "Message too short or long (more than 2048)")
     private String text;
     @Length(max = 200, message = "Tags are too long (more than 200)")

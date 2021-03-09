@@ -69,6 +69,7 @@ public class MainController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("message", message);
         } else {
+
         if(file != null && !file.getOriginalFilename().isEmpty()){
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()){
@@ -87,11 +88,10 @@ public class MainController {
 
             message.setFilename(resultFileName);
         }
-
+        model.addAttribute("message", null);
         messageRepo.save(message);
         }
 
-        model.addAttribute("message", null);
         //Need to make new method for this
         Iterable<Message> messages = messageRepo.findAll();
         model.addAttribute("messages", messages);

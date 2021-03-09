@@ -126,8 +126,10 @@ public class UserService implements UserDetailsService {
             }
         }
 
-        if(!StringUtils.isEmpty(password)){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(!password.isEmpty()){
+            System.out.println(password);
+            System.out.println(user.getPassword());
+            user.setPassword(passwordEncoder.encode(password));
         }
 
         userRepo.save(user);

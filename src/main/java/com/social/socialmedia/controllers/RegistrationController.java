@@ -65,6 +65,7 @@ public class RegistrationController {
 
         if(user.getPassword()!=null && !user.getPassword().equals(passwordConfirm)){
             model.addAttribute("passwordError", "Passwords aren't equal!");
+            return "registration";
         }
         if(isConfirmEmpty || bindingResult.hasErrors() || !responseDto.isSuccess()){
             Map<String, String> errors = UtilsController.getErrors(bindingResult);
