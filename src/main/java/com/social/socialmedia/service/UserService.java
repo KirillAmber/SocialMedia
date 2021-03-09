@@ -122,7 +122,7 @@ public class UserService implements UserDetailsService {
         }
 
         if(!StringUtils.isEmpty(password)){
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         userRepo.save(user);

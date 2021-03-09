@@ -13,7 +13,7 @@
 
         </div>
     </div>
-    <p th:text="(${message} == null)? '' : ${message}">
+    <div th:class="${messageType}" role="alert" th:text="(${message} == null)? '' : ${message}"/>
     <div th:insert="fragments/formEnterUserData :: form ('/login', 'Sign In', false)" />
     <div class="mt-2">
         <a  href="/registration">Sign up</a>

@@ -48,6 +48,10 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="g-recaptcha" data-sitekey="6LeGzncaAAAAAK8W6iV-cWnXIhGC3AC0-gTdME54"></div>
+            <div th:if="${captchaError}" class="alert alert-danger" role="alert" th:text="${captchaError}"/>
+        </div>
     </div>
     <button class="btn btn-primary" type="submit" th:text="${buttonName}">Text</button>
 </form>
